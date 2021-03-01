@@ -1,0 +1,33 @@
+.CharacterGridCard {
+    no-display: flex;
+    no-flex-direction: column;
+    no-position: relative;
+    no-overflow: hidden;
+    no-height: 100px;
+}
+
+.CharacterGridCard .CardImage {
+    width: 100%;
+    padding-top: 100%;
+    background-size: cover;
+    background-image: url(http://localhost:3000/static/img/loading_image.gif);
+}
+
+.CharacterGridCard .CardDetails{
+    line-height: 1rem;
+    position: relative;
+    overflow: hidden;
+    padding: .8rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.CharacterGridCard .CardDetails div {
+    padding: 0;
+    width: 100%;
+    margin: 0;
+    font-size: .9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

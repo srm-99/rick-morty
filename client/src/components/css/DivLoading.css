@@ -1,0 +1,8 @@
+.DivLoading {
+    width: 100%;
+    height: Calc(100vh - 14.1rem);
+    background-image: url(http://localhost:3000/static/img/loading_image.gif);
+    background-size: contain;
+    background-position: center -3rem;
+    background-repeat: no-repeat;
+}

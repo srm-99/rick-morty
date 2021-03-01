@@ -1,0 +1,6 @@
+.ContentPage {
+    padding: 1rem;
+    width: 100%;
+    height: Calc(100vh - 4.1rem);
+    overflow: auto;
+}
