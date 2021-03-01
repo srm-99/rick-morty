@@ -28,12 +28,12 @@ function Layout(props){
                             <CacheRoute path='/characters/p/:page'>
                                 <CharactersPage />
                             </CacheRoute>
-                            <Route path='/locations'>
+                            <CacheRoute path='/locations'>
                                 <LocationsPage />
-                            </Route>
-                            <Route path='/episodes'>
+                            </CacheRoute>
+                            <CacheRoute path='/episodes'>
                                 <EpisodesPage />
-                            </Route>
+                            </CacheRoute>
                             
                             <Redirect to='/characters' />
                         </CacheSwitch>
