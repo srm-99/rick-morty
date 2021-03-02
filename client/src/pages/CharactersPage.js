@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Switch } from 'react-router-dom';
 
 import ContentPage from '../components/ContentPage';
 import CardsGrid from '../components/CardsGrid';
-
-import CharacterGridCard from '../components/CharacterGridCard';
 import Pagination from '../components/Pagination';
-import { Switch } from 'react-router-dom';
+import ModalDialog from '../components/ModalDialog';
+
+import CharacterModalContent from '../fragments/CharacterModalContent';
+import CharacterGridCard from '../fragments/CharacterGridCard';
 
 function CharactersPage() {
     const [data, setData] = useState([]);
     const [info, setInfo] = useState({});
     const [page, setPage] = useState(1);
+    const [currentRegContent, setCurrentRegContent] = useState('');
+    const [currentReg, setCurrentReg] = useState({});
 
     useEffect(async () => {
         loadCharacters();
@@ -39,19 +43,35 @@ function CharactersPage() {
         setPage(page);
     }
 
+    function clickCardHandle(reg){
+        setCurrentReg(reg);
+        let htmlReg = (
+            <CharacterModalContent reg={reg} />
+        );
+        setCurrentRegContent(htmlReg);
+        $('#charactersModal').modal();
+    }
+
     function renderCardHandle(reg, i){
         return (
-            <CharacterGridCard reg={reg} key={i}/>
+            <CharacterGridCard reg={reg} key={i} clickCardHandle={clickCardHandle}/>
         )
     }
 
     return (
         <ContentPage>
-            <legend>Personajes <small>({info.count})</small></legend>
+            <legend className='pb-2'>Personajes <small>({info.count})</small></legend>
             <CardsGrid data={data} renderCardHandle={renderCardHandle}/>
             <Switch>
                 <Pagination current={page} info={info} pagingHandle={loadCharacters}/>
-            </Switch>                
+            </Switch>
+            <ModalDialog
+                title={`Personaje: ${currentReg.name}`}
+                reg={currentReg}
+                id='charactersModal' 
+            >
+                {currentRegContent}
+            </ModalDialog>
         </ContentPage>
     )
 }

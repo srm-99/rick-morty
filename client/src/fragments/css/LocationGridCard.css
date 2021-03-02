@@ -1,19 +1,29 @@
-.CharacterGridCard {
-    no-display: flex;
-    no-flex-direction: column;
-    no-position: relative;
-    no-overflow: hidden;
-    no-height: 100px;
+.LocationGridCard {
+
 }
 
-.CharacterGridCard .CardImage {
+.LocationGridCard > a{
+    filter: grayscale(100%);
+}
+
+.LocationGridCard > a:hover {
+    filter: grayscale(0%);
+}
+
+.LocationGridCard .CardImage {
+    transition: filter ease 500ms;
+    filter: grayscale(100%);
     width: 100%;
     padding-top: 100%;
     background-size: cover;
     background-image: url(http://localhost:3000/static/img/loading_image.gif);
 }
 
-.CharacterGridCard .CardDetails{
+.LocationGridCard .CardImage:hover {
+    filter: grayscale(0%);
+}
+
+.LocationGridCard .CardDetails{
     line-height: 1rem;
     position: relative;
     overflow: hidden;
@@ -22,7 +32,7 @@
     white-space: nowrap;
 }
 
-.CharacterGridCard .CardDetails div {
+.LocationGridCard .CardDetails div {
     padding: 0;
     width: 100%;
     margin: 0;

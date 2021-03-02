@@ -3,18 +3,16 @@ import { Link } from 'react-router-dom';
 
 import './css/CharacterGridCard.css';
 
-function CharacterGridCard({reg}){
+function CharacterGridCard({reg, clickCardHandle}){
     let statusColor = reg.status === 'Alive' ? 'text-success' :
                       reg.status === 'Dead' ? 'text-danger' : 'text-muted';
     return (
         <div className='CharacterGridCard card'>
-            <a target='_blank' href={`http://localhost:7000/characters/${reg.id}`}>
-            <div 
-                className="CardImage"
-                style={{
-                    backgroundImage: `url(${reg.image})`
-                }} 
-            ></div>
+            <a target='_blank' onClick={()=>clickCardHandle(reg)} no_href={`http://localhost:7000/characters/${reg.id}`}>
+                <div 
+                    className="CardImage"
+                    style={{backgroundImage: `url(${reg.image})`}} 
+                ></div>
             </a>
             <div className="CardDetails">
                     <div className="fw-bold mb-1">

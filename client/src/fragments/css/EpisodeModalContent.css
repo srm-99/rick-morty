@@ -1,0 +1,27 @@
+.EpisodeModalContent {
+
+}
+
+.EpisodeModalContent .ModalMainImage {
+    object-fit: cover;
+    border-radius: 5px;
+    width: 33.3333333%;
+    height: auto;
+    float: left;
+    padding: 0 !important;
+}
+
+.EpisodeModalContent .ImagesContainer {
+    position: relative;
+    overflow: hidden;
+    overflow-y: auto;
+    height: 300px;
+    width: 500px;
+}
+
+.EpisodeModalContent .Details {
+    width: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    height: 325px;
+}

@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { Switch } from 'react-router-dom';
 
 import ContentPage from '../components/ContentPage';
 import CardsGrid from '../components/CardsGrid';
-
-import EpisodeGridCard from '../components/EpisodeGridCard';
 import Pagination from '../components/Pagination';
-import { Switch } from 'react-router-dom';
+import ModalDialog from '../components/ModalDialog';
+
+import EpisodeModalContent from '../fragments/EpisodeModalContent';
+import EpisodeGridCard from '../fragments/EpisodeGridCard';
 
 function EpisodesPage() {
     const [data, setData] = useState([]);
     const [info, setInfo] = useState({});
     const [page, setPage] = useState(1);
+    const [currentRegContent, setCurrentRegContent] = useState('');
+    const [currentReg, setCurrentReg] = useState({});
 
     useEffect(async () => {
         loadEpisodes();
@@ -41,6 +45,11 @@ function EpisodesPage() {
                 let idCh = ch.split('/').slice(-1)[0];
                 data[i].starring.push(`https://rickandmortyapi.com/api/character/avatar/${idCh}.jpeg`);
             })
+            if(data[i].starring.length < 4){
+                Array(4-data[i].starring.length).fill('').forEach( () => {
+                    data[i].starring.push(`http://localhost:3000/static/img/unknown_character_inv.png`);
+                })
+            }
         })
         
         setInfo(info);
@@ -48,19 +57,35 @@ function EpisodesPage() {
         setPage(page);
     }
 
+    function clickCardHandle(reg){
+        setCurrentReg(reg);
+        let htmlReg = (
+            <EpisodeModalContent reg={reg} />
+        );
+        setCurrentRegContent(htmlReg);
+        $('#episodesModal').modal();
+    }
+
     function renderCardHandle(reg, i){
         return (
-            <EpisodeGridCard reg={reg} key={i}/>
+            <EpisodeGridCard reg={reg} key={i} clickCardHandle={clickCardHandle}/>
         )
     }
 
     return (
         <ContentPage>
-            <legend>Episodios <small>({info.count})</small></legend>
+            <legend className='pb-2'>Episodios <small>({info.count})</small></legend>
             <CardsGrid data={data} renderCardHandle={renderCardHandle}/>
             <Switch>
                 <Pagination current={page} info={info} pagingHandle={loadEpisodes}/>
-            </Switch>                
+            </Switch>
+            <ModalDialog
+                title={`Episodio: ${currentReg.episode} ${currentReg.name}`}
+                reg={currentReg}
+                id='episodesModal' 
+            >
+                {currentRegContent}
+            </ModalDialog>
         </ContentPage>
     )
 }

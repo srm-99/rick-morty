@@ -3,19 +3,15 @@ import { Link } from 'react-router-dom';
 
 import './css/EpisodeGridCard.css';
 
-function EpisodeGridCard({reg}){
-    console.log({reg});
-
-    let statusColor = reg.status === 'Alive' ? 'text-success' :
-                      reg.status === 'Dead' ? 'text-danger' : 'text-muted';
+function EpisodeGridCard({reg, clickCardHandle}){
     return (
         <div className='EpisodeGridCard card'>
-            <a target='_blank' href={`http://localhost:7000/episodes/${reg.id}`}>
+            <a target='_blank' onClick={()=>clickCardHandle(reg)} no_href={`http://localhost:7000/episodes/${reg.id}`}>
             <div 
                 className="no-CardImage"
             >
-                {reg.starring.map(ch => {
-                    return <img style={{float: 'left', width: '50%', height: 'auto'}} src={ch} />
+                {reg.starring.map((ch, i) => {
+                    return <img key={i} style={{float: 'left', width: '50%', height: 'auto'}} src={ch} />
                 })}
             </div>
             </a>

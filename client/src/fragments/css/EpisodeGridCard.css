@@ -2,11 +2,25 @@
 
 }
 
+.EpisodeGridCard > a{
+    filter: grayscale(100%);
+}
+
+.EpisodeGridCard > a:hover {
+    filter: grayscale(0%);
+}
+
 .EpisodeGridCard .CardImage {
+    transition: filter ease 500ms;
+    filter: grayscale(100%);
     width: 100%;
     padding-top: 100%;
     background-size: cover;
     background-image: url(http://localhost:3000/static/img/loading_image.gif);
+}
+
+.EpisodeGridCard .CardImage:hover {
+    filter: grayscale(0%);
 }
 
 .EpisodeGridCard .CardDetails{

@@ -12,8 +12,6 @@ function Pagination({current, info, pagingHandle}) {
 
     pages = pages.filter(p => p >= pFrom && p <= pTo);
 
-    console.log(current, pages);
-
     return (
         <nav aria-label="Page navigation">
             <ul className="mt-4 pagination pagination-sm justify-content-center">

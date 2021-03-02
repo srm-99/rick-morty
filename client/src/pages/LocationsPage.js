@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { Switch } from 'react-router-dom';
 
 import ContentPage from '../components/ContentPage';
 import CardsGrid from '../components/CardsGrid';
 
-import LocationGridCard from '../components/LocationGridCard';
 import Pagination from '../components/Pagination';
-import { Switch } from 'react-router-dom';
+import ModalDialog from '../components/ModalDialog';
+
+import LocationModalContent from '../fragments/LocationModalContent';
+import LocationGridCard from '../fragments/LocationGridCard';
 
 function LocationsPage() {
     const [data, setData] = useState([]);
     const [info, setInfo] = useState({});
     const [page, setPage] = useState(1);
+    const [currentRegContent, setCurrentRegContent] = useState('');
+    const [currentReg, setCurrentReg] = useState({});
 
     useEffect(async () => {
         loadLocations();
@@ -43,7 +48,7 @@ function LocationsPage() {
             })
             if(data[i].starring.length < 4){
                 Array(4-data[i].starring.length).fill('').forEach( () => {
-                    data[i].starring.push(`http://localhost:3000/static/img/unknown_character.jpeg`);
+                    data[i].starring.push(`http://localhost:3000/static/img/unknown_character_inv.png`);
                 })
             }
         })
@@ -53,19 +58,35 @@ function LocationsPage() {
         setPage(page);
     }
 
+    function clickCardHandle(reg){
+        setCurrentReg(reg);
+        let htmlReg = (
+            <LocationModalContent reg={reg} />
+        );
+        setCurrentRegContent(htmlReg);
+        $('#locationsModal').modal();
+    }
+
     function renderCardHandle(reg, i){
         return (
-            <LocationGridCard reg={reg} key={i}/>
+            <LocationGridCard reg={reg} key={i} clickCardHandle={clickCardHandle}/>
         )
     }
 
     return (
         <ContentPage>
-            <legend>Lugares <small>({info.count})</small></legend>
+            <legend className='pb-2'>Lugares <small>({info.count})</small></legend>
             <CardsGrid data={data} renderCardHandle={renderCardHandle}/>
             <Switch>
                 <Pagination current={page} info={info} pagingHandle={loadLocations}/>
-            </Switch>                
+            </Switch> 
+            <ModalDialog
+                title={`Lugar: ${currentReg.name}`}
+                reg={currentReg}
+                id='locationsModal' 
+            >
+                {currentRegContent}
+            </ModalDialog>
         </ContentPage>
     )
 }
