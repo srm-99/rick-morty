@@ -12,9 +12,12 @@ function EpisodeModalContent({reg}){
 
     return (
         <div className='EpisodeModalContent d-flex flex-row'>
-            <div className='ml-2 mr-3' style={{width: 300, position: 'relative'}}>
+
+            <div className='ml-2 mr-3'>
+            
                 <small>PERSONAJES</small>
-                <div className='ImagesContainer' style={{width: 300, position: 'relative'}}>
+            
+                <div className='ImagesContainer'>
                     {reg.characters.map((ch, i) => {
                         let idCh = ch.split('/').slice(-1);
                         let src = `https://rickandmortyapi.com/api/character/avatar/${idCh}.jpeg`;
@@ -23,7 +26,9 @@ function EpisodeModalContent({reg}){
                             </a>
                     })}
                 </div>
+            
             </div>
+            
             <div className='Details pl-2 pr-2 pb-3'>
                 {Object.keys(reg).map((k, i) => {
                     let value = '';
@@ -43,7 +48,7 @@ function EpisodeModalContent({reg}){
                                         defaultValue = {value}
                                     />
                                 ) : (
-                                    <div className='card-text p-1 pt-2 pb-2' style={{minHeight: '2.5rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace:'nowrap'}}>
+                                    <div className='ReadonlyControl card-text p-1 pt-2 pb-2'>
                                         <big>
                                             {value}
                                         </big>

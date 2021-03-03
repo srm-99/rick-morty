@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import {Compass, Users, Video} from 'react-feather';
+import {MapPin, Users, Video} from 'react-feather';
 
 import './css/SideBar.css';
 
@@ -17,7 +17,7 @@ function SideBar() {
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" to="locations">
-                        <Compass /><span className='pl-3'>Lugares</span>
+                        <MapPin /><span className='pl-3'>Lugares</span>
                     </Link>
                 </li>
                 <li className="nav-item">

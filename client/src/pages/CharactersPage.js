@@ -5,9 +5,12 @@ import ContentPage from '../components/ContentPage';
 import CardsGrid from '../components/CardsGrid';
 import Pagination from '../components/Pagination';
 import ModalDialog from '../components/ModalDialog';
+import ContentTitle from '../components/ContentTitle';
 
 import CharacterModalContent from '../fragments/CharacterModalContent';
 import CharacterGridCard from '../fragments/CharacterGridCard';
+
+import CRUD from '../modules/crud';
 
 function CharactersPage() {
     const [data, setData] = useState([]);
@@ -15,12 +18,27 @@ function CharactersPage() {
     const [page, setPage] = useState(1);
     const [currentRegContent, setCurrentRegContent] = useState('');
     const [currentReg, setCurrentReg] = useState({});
+    const [alertMsg, setAlertMsg] = useState('');
 
     useEffect(async () => {
-        loadCharacters();
+        loadCharactersCRUD();
         let currentPage = document.location.search;
-        console.log(currentPage); 
     }, []);
+
+    async function loadCharactersCRUD(page=1){
+        let options = {
+            page
+        };
+        let entity = 'characters';
+        let jsonRslt = await CRUD.load(entity, options);
+
+        let info = jsonRslt.info || {};
+        let data = jsonRslt.results || [];
+
+        setInfo(info);
+        setData(data);
+        setPage(page);
+    }
 
     async function loadCharacters(page=1){
         setData([]);
@@ -46,7 +64,7 @@ function CharactersPage() {
     function clickCardHandle(reg){
         setCurrentReg(reg);
         let htmlReg = (
-            <CharacterModalContent reg={reg} />
+            <CharacterModalContent reg={reg} isWritable={true} />
         );
         setCurrentRegContent(htmlReg);
         $('#charactersModal').modal();
@@ -58,20 +76,102 @@ function CharactersPage() {
         )
     }
 
+    function newRecordHandle(){
+        $('#newCharacterModal').modal();
+    }
+
+    async function onSaveHandle(isNew){
+        var objectData = {};
+        
+        let idForm = isNew ? 'newCharacterCrudForm' : 'characterCrudForm';
+
+        let characterCrudForm = document.getElementById(idForm);
+        let formData = new FormData(characterCrudForm);
+        
+        formData.forEach(function(value, key){
+            objectData[key] = value;
+        });
+        
+        if(isNew){
+            CRUD.create('characters', {data: objectData});
+        } else {
+            CRUD.update('characters', {data: objectData});
+        }
+
+        onCancelHandle();
+
+        setAlertMsg('El personaje ha guardado con éxito.');
+        $('#alertModal').modal();
+    }
+    
+    async function onDeleteHandle(){
+        let rsp = confirm('Confirme eliminar el registro actual.');
+        if(rsp == 1){
+            let rsp = await CRUD.delete('characters', currentReg.id);
+            onCancelHandle();
+
+            setAlertMsg('El personaje ha sido eliminado con éxito.');
+            $('#alertModal').modal();
+        }
+    }
+    
+    function onCancelHandle(){
+        $('#charactersModal')  .modal('hide');
+        $('#newCharacterModal').modal('hide');
+    }
+
     return (
         <ContentPage>
-            <legend className='pb-2'>Personajes <small>({info.count})</small></legend>
+
+            <ContentTitle title='Personajes' total={info.count} isCrud={true} newRecordHandle={newRecordHandle} />
+            
             <CardsGrid data={data} renderCardHandle={renderCardHandle}/>
+            
             <Switch>
-                <Pagination current={page} info={info} pagingHandle={loadCharacters}/>
+                <Pagination current={page} info={info} pagingHandle={loadCharactersCRUD}/>
             </Switch>
+
             <ModalDialog
+                onSaveHandle={onSaveHandle}
+                onCancelHandle={onCancelHandle}
+                onDeleteHandle={onDeleteHandle}
+
                 title={`Personaje: ${currentReg.name}`}
                 reg={currentReg}
                 id='charactersModal' 
+                actions={['save','delete','cancel']}
             >
                 {currentRegContent}
             </ModalDialog>
+
+            <ModalDialog
+                onSaveHandle={onSaveHandle}
+                onCancelHandle={onCancelHandle}
+                onDeleteHandle={onDeleteHandle}
+
+                title={`Crear nuevo Personaje`}
+                id='newCharacterModal'
+                entity='characters'
+                actions={['dummy', 'save','cancel']}
+                isNew={true}
+            >
+                {
+                    data[0] &&
+                    <CharacterModalContent
+                        reg={data[0]}
+                        isWritable={true}
+                        isNew={true}
+                    />
+                }
+            </ModalDialog>
+
+            <ModalDialog
+                maxwidth='30vw'
+                id='alertModal'
+            >
+                {alertMsg}
+            </ModalDialog>
+
         </ContentPage>
     )
 }

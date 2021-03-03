@@ -50,15 +50,61 @@ router
     })
 
     .post('/:entity', async (req, res, next) => {
+        const {
+            entity
+        } = req.params;
+
+        const data = req.body;
+
+        console.log({data});
         
+        let results = await service.upsertEntity(entity, {data})
+
+        res
+            .status(200)
+            .json({
+                error: false,
+                msg: 'Registro creado'
+            })
     })
 
     .patch('/:entity', async (req, res, next) => {
+        const {
+            entity
+        } = req.params;
 
+        const data = req.body;
+
+        console.log({data});
+        
+        let results = await service.upsertEntity(entity, {data})
+
+        res
+            .status(200)
+            .json({
+                error: false,
+                msg: 'Registro creado'
+            })
     })
 
     .delete('/:entity', async (req, res, next) => {
+        const {
+            entity
+        } = req.params;
 
+        const {
+            id
+        } = req.query;
+
+        let rs = await service.deleteEntity(entity, id);
+        console.log('DELETE: ', {rs});
+
+        res
+            .status(200)
+            .json({
+                error: false,
+                msg: 'Registro eliminado'
+            })
     })
 ;
 

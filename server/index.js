@@ -5,6 +5,7 @@ let app = express();
 app
     .use(require('morgan')('dev'))
     .use(require('cors')())
+    .use(express.json({limit:'50mb'}))
 ;
 
 app

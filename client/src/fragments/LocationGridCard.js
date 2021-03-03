@@ -8,10 +8,10 @@ function LocationGridCard({reg, clickCardHandle}){
         <div className='LocationGridCard card'>
             <a target='_blank' onClick={()=>clickCardHandle(reg)} no_href={`http://localhost:7000/locations/${reg.id}`}>
             <div 
-                className="no-CardImage"
+                className="ImageContainer"
             >
                 {reg.starring.map((ch,i) => {
-                    return <img key={i} style={{float: 'left', width: '50%', height: 'auto'}} src={ch} />
+                    return <img key={i} src={ch} />
                 })}
             </div>
             </a>

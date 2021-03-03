@@ -16,7 +16,7 @@
     overflow: hidden;
     overflow-y: auto;
     height: 300px;
-    width: 500px;
+    width: 300px;
 }
 
 .LocationModalContent .Details {
@@ -24,4 +24,11 @@
     overflow: hidden;
     overflow-y: auto;
     height: 325px;
+}
+
+.LocationModalContent .ReadonlyControl {
+    min-height: 2.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
 }

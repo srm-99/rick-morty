@@ -20,7 +20,6 @@ function LocationsPage() {
     useEffect(async () => {
         loadLocations();
         let currentPage = document.location.search;
-        console.log(currentPage); 
     }, []);
 
     async function loadLocations(page=1){
@@ -75,11 +74,15 @@ function LocationsPage() {
 
     return (
         <ContentPage>
+
             <legend className='pb-2'>Lugares <small>({info.count})</small></legend>
+            
             <CardsGrid data={data} renderCardHandle={renderCardHandle}/>
+            
             <Switch>
                 <Pagination current={page} info={info} pagingHandle={loadLocations}/>
             </Switch> 
+            
             <ModalDialog
                 title={`Lugar: ${currentReg.name}`}
                 reg={currentReg}
@@ -87,6 +90,7 @@ function LocationsPage() {
             >
                 {currentRegContent}
             </ModalDialog>
+        
         </ContentPage>
     )
 }

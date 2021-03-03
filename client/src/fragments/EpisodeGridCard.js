@@ -7,11 +7,9 @@ function EpisodeGridCard({reg, clickCardHandle}){
     return (
         <div className='EpisodeGridCard card'>
             <a target='_blank' onClick={()=>clickCardHandle(reg)} no_href={`http://localhost:7000/episodes/${reg.id}`}>
-            <div 
-                className="no-CardImage"
-            >
+            <div>
                 {reg.starring.map((ch, i) => {
-                    return <img key={i} style={{float: 'left', width: '50%', height: 'auto'}} src={ch} />
+                    return <img className='CardImage' key={i} src={ch} />
                 })}
             </div>
             </a>

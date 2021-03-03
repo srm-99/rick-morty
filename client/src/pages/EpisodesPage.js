@@ -19,7 +19,6 @@ function EpisodesPage() {
     useEffect(async () => {
         loadEpisodes();
         let currentPage = document.location.search;
-        console.log(currentPage); 
     }, []);
 
     async function loadEpisodes(page=1){

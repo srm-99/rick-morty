@@ -23,7 +23,7 @@ function Pagination({current, info, pagingHandle}) {
                 {
                     pages.map((page, i) => {
                         // TODO, seleccionar página actual
-                        let pageActive = '';
+                        let pageActive = page == current ? 'active' : '';
                         return <li key={i+1} className={`page-item ${pageActive}`}>
                             <a onClick={()=>pagingHandle(page)} className="page-link">{page}</a>
                         </li>

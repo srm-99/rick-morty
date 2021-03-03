@@ -3,6 +3,7 @@
 }
 
 .LocationGridCard > a{
+    transition: filter ease 300ms;
     filter: grayscale(100%);
 }
 
@@ -10,17 +11,10 @@
     filter: grayscale(0%);
 }
 
-.LocationGridCard .CardImage {
-    transition: filter ease 500ms;
-    filter: grayscale(100%);
-    width: 100%;
-    padding-top: 100%;
-    background-size: cover;
-    background-image: url(http://localhost:3000/static/img/loading_image.gif);
-}
-
-.LocationGridCard .CardImage:hover {
-    filter: grayscale(0%);
+.LocationGridCard .ImageContainer img {
+    float: left;
+    width: 50%;
+    height: auto;
 }
 
 .LocationGridCard .CardDetails{

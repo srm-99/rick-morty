@@ -21,11 +21,15 @@ function CharacterGridCard({reg, clickCardHandle}){
                         </a>
                     </div>
                     <div><span className={`pr-2 ${statusColor}`}>●</span>{reg.status} - {reg.species}</div>
+                    <small className='text-muted'>Última ubicación conocida</small><br/>
                     <div>
-                        <small className='text-muted'>Última ubicación conocida</small><br/>
+                    { reg.location.hasOwnProperty('url') ? (
                         <a target='_blank' href={`http://localhost:7000/locations/${reg.location.url.split('/').slice(-1)}`}>
                             {reg.location.name}
                         </a>
+                    ):(
+                        <span>{reg.location}</span>
+                    )} 
                     </div>
             </div>
         </div>

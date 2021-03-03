@@ -6,9 +6,12 @@ function LocationModalContent({reg}){
     const [editing, setEditing] = useState(false);
     return (
         <div className='LocationModalContent d-flex flex-row'>
-            <div className='ml-2 mr-3' style={{width: 300, position: 'relative'}}>
+            
+            <div className='ml-2 mr-3'>
+                
                 <small>RESIDENTES</small>
-                <div className='ImagesContainer' style={{width: 300, position: 'relative'}}>
+                
+                <div className='ImagesContainer'>
                     {reg.residents.map((ch, i) => {
                         let idCh = ch.split('/').slice(-1);
                         let src = `https://rickandmortyapi.com/api/character/avatar/${idCh}.jpeg`;
@@ -17,7 +20,9 @@ function LocationModalContent({reg}){
                             </a>
                     })}
                 </div>
+            
             </div>
+
             <div className='Details pl-2 pr-2 pb-3'>
                 {Object.keys(reg).map((k, i) => {
                     let value = '';
