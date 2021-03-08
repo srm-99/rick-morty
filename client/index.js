@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 
 let app = express();
 
@@ -22,5 +21,7 @@ app
 let port = process.env.EXPRESS_PORT || '3000';
 let host = process.env.EXPRESS_HOST || 'localhost';
 app.listen(port, host, () => {
+
     console.log(`Server started: http://${host}:${port}`);
+
 });

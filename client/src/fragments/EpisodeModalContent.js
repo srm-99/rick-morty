@@ -48,7 +48,7 @@ function EpisodeModalContent({reg}){
                                         defaultValue = {value}
                                     />
                                 ) : (
-                                    <div className='ReadonlyControl card-text p-1 pt-2 pb-2'>
+                                    <div className='ReadonlyControl card-text'>
                                         <big>
                                             {value}
                                         </big>

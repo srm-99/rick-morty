@@ -4,7 +4,6 @@
     align-items: center;
     width: 100%;
     height: Calc(100vh - 13.5rem);
-    no-background-image: url(http://localhost:3000/static/img/loading_image.gif); 
 }
 
 .DivLoading svg {

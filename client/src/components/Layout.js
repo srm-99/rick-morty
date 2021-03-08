@@ -1,44 +1,52 @@
 import React from 'react';
-import {MemoryRouter, Redirect, Route, Switch} from 'react-router-dom';
-import CacheRoute, {CacheSwitch} from 'react-router-cache-route';
+import { MemoryRouter, Redirect, Route, Switch } from 'react-router-dom';
+import CacheRoute, { CacheSwitch } from 'react-router-cache-route';
 
 import MenuBar from './MenuBar';
 import Content from './Content';
 import SideBar from './SideBar';
 import ContentBody from './ContentBody';
 
-import CharactersPage from '../pages/CharactersPage';
-import LocationsPage from '../pages/LocationsPage';
-import EpisodesPage from '../pages/EpisodesPage';
-
 import './css/Layout.css';
 
-function Layout(props){
+function Layout({ title, sideBarMenu, routes }) {
+
     return (
+
         <div className='Layout'>
-            <MenuBar title='Explorador de API de Rick & Morty'/>
+
+            <MenuBar title={title} />
+
             <MemoryRouter>
+
                 <Content>
-                    <SideBar />
+
+                    <SideBar menuConfig={sideBarMenu} />
+
                     <ContentBody>
+
                         <CacheSwitch>
-                            <CacheRoute path='/characters'>
-                                <CharactersPage />
-                            </CacheRoute>
-                            <CacheRoute path='/characters/p/:page'>
-                                <CharactersPage />
-                            </CacheRoute>
-                            <CacheRoute path='/locations'>
-                                <LocationsPage />
-                            </CacheRoute>
-                            <CacheRoute path='/episodes'>
-                                <EpisodesPage />
-                            </CacheRoute>
-                            
-                            <Redirect to='/characters' />
+
+                            {
+                                routes.map((route, i) => {
+
+                                    return (
+                                        <CacheRoute key={i} path={route.route}>
+                                            {route.page}
+                                        </CacheRoute>
+                                    )
+
+                                })
+                            }
+
+                            <Redirect to={routes[0].route} />
+
                         </CacheSwitch>
+
                     </ContentBody>
+
                 </Content>
+
             </MemoryRouter>
         </div>
     )

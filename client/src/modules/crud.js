@@ -1,5 +1,3 @@
-import React from 'react';
-
 const CRUD = {
 
     migrate: async () => { },
@@ -42,7 +40,6 @@ const CRUD = {
             .then(rslt => rslt.json())
             .catch(err => console.log({err}))
         ;
-        console.log({jsonRS});
 
         console.log('CREATE ' + entity + ' WITH ', data);
         return jsonRS || []
@@ -89,10 +86,10 @@ const CRUD = {
             .then(rslt => rslt.json())
             .catch(err => console.log({err}))
         ;
-        console.log({jsonRS});
         
         return jsonRS;
     }
+    
 }
 
 export default CRUD;

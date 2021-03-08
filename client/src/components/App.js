@@ -4,14 +4,23 @@ import Layout from './Layout';
 
 import './css/App.css';
 
-function App(){
-    function checkBD(){
-        
-    }
+function App({ config }) {
+
+    const {
+        app,
+        routes
+    } = config;
 
     return (
         <div className='App'>
-            <Layout/>
+
+            <Layout
+                title={app.title}
+                sideBarMenu={app.sideBarMenu}
+                
+                routes={routes}
+            />
+
         </div>
     )
 }

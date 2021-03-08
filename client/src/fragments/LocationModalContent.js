@@ -42,7 +42,7 @@ function LocationModalContent({reg}){
                                         defaultValue = {value}
                                     />
                                 ) : (
-                                    <div className='card-text p-1 pt-2 pb-2' style={{minHeight: '2.5rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace:'nowrap'}}>
+                                    <div className='ReadonlyControl card-text'>
                                         <big>
                                             {value}
                                         </big>

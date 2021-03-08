@@ -4,11 +4,20 @@ import {Loader} from 'react-feather';
 
 import './css/DivLoading.css';
 
-function DivLoading(){
+function DivLoading({options = {}}) {
+
+    const {
+        size = '2.5rem'
+    } = options;
+
     return (
+    
         <div className='DivLoading'>
-            <Loader size='2.5rem' />
+    
+            <Loader size={size} />
+    
         </div>
+    
     )
 }
 

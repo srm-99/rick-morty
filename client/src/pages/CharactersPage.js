@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Switch } from 'react-router-dom';
 
-import ContentPage from '../components/ContentPage';
-import CardsGrid from '../components/CardsGrid';
-import Pagination from '../components/Pagination';
-import ModalDialog from '../components/ModalDialog';
+import ContentPage  from '../components/ContentPage';
+import CardsGrid    from '../components/CardsGrid';
+import Pagination   from '../components/Pagination';
+import ModalDialog  from '../components/ModalDialog';
 import ContentTitle from '../components/ContentTitle';
 
 import CharacterModalContent from '../fragments/CharacterModalContent';
-import CharacterGridCard from '../fragments/CharacterGridCard';
+import CharacterGridCard     from '../fragments/CharacterGridCard';
 
 import CRUD from '../modules/crud';
 
@@ -19,6 +19,7 @@ function CharactersPage() {
     const [currentRegContent, setCurrentRegContent] = useState('');
     const [currentReg, setCurrentReg] = useState({});
     const [alertMsg, setAlertMsg] = useState('');
+    const [htmlCurrentRegContent, setCurrentRegHtml] = useState(''); 
 
     useEffect(async () => {
         loadCharactersCRUD();
@@ -40,33 +41,8 @@ function CharactersPage() {
         setPage(page);
     }
 
-    async function loadCharacters(page=1){
-        setData([]);
-
-        let url = `http://localhost:7000/characters/?page=${page}`;
-        
-        let jsonRslt = await fetch(url, {
-                headers: {
-                    token: '#TOKEN12345=='
-                }
-            })
-            .then(rslt => rslt.json())
-            .catch(err => {console.log({err})})
-        ;
-        
-        let info = jsonRslt.info || {};
-        let data = jsonRslt.results || [];
-        setInfo(info);
-        setData(data);
-        setPage(page);
-    }
-
     function clickCardHandle(reg){
         setCurrentReg(reg);
-        let htmlReg = (
-            <CharacterModalContent reg={reg} isWritable={true} />
-        );
-        setCurrentRegContent(htmlReg);
         $('#charactersModal').modal();
     }
 
@@ -81,6 +57,7 @@ function CharactersPage() {
     }
 
     async function onSaveHandle(isNew){
+        
         var objectData = {};
         
         let idForm = isNew ? 'newCharacterCrudForm' : 'characterCrudForm';
@@ -100,18 +77,23 @@ function CharactersPage() {
 
         onCancelHandle();
 
-        setAlertMsg('El personaje ha guardado con éxito.');
+        setAlertMsg('El personaje se ha guardado con éxito.');
         $('#alertModal').modal();
+
+        loadCharactersCRUD(page);
     }
     
     async function onDeleteHandle(){
         let rsp = confirm('Confirme eliminar el registro actual.');
+        
         if(rsp == 1){
             let rsp = await CRUD.delete('characters', currentReg.id);
             onCancelHandle();
 
             setAlertMsg('El personaje ha sido eliminado con éxito.');
             $('#alertModal').modal();
+
+            loadCharactersCRUD(page);
         }
     }
     
@@ -121,6 +103,7 @@ function CharactersPage() {
     }
 
     return (
+
         <ContentPage>
 
             <ContentTitle title='Personajes' total={info.count} isCrud={true} newRecordHandle={newRecordHandle} />
@@ -141,7 +124,9 @@ function CharactersPage() {
                 id='charactersModal' 
                 actions={['save','delete','cancel']}
             >
-                {currentRegContent}
+                {/* {htmlCurrentRegContent} */}
+                <CharacterModalContent reg={currentReg} isWritable={true} />
+
             </ModalDialog>
 
             <ModalDialog
@@ -163,13 +148,27 @@ function CharactersPage() {
                         isNew={true}
                     />
                 }
+
             </ModalDialog>
 
             <ModalDialog
-                maxwidth='30vw'
+                maxWidth='30vw'
                 id='alertModal'
             >
-                {alertMsg}
+                <div className='p-2 d-flex flex-row'>
+                    
+                    <div>
+                        <img className='DialogIcon' src='/static/img/info_icon.svg' />
+                    </div>
+
+                    <div className='DialogContent flex-grow-1 d-flex p-2' style={{
+                        alignItems: 'center'
+                    }}>
+                        {alertMsg}
+                    </div>
+
+                </div>
+
             </ModalDialog>
 
         </ContentPage>
