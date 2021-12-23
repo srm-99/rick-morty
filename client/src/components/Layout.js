@@ -10,13 +10,14 @@ import ContentBody from './ContentBody';
 import CharactersPage from '../pages/CharactersPage';
 import LocationsPage from '../pages/LocationsPage';
 import EpisodesPage from '../pages/EpisodesPage';
+import HeatMapPage from '../pages/HeatMapPage';
 
 import './css/Layout.css';
 
-function Layout(props){
+function Layout(props) {
     return (
         <div className='Layout'>
-            <MenuBar title='Explorador de API de Rick & Morty'/>
+            <MenuBar title='Explorador de API de Rick & Morty' />
             <MemoryRouter>
                 <Content>
                     <SideBar />
@@ -34,14 +35,16 @@ function Layout(props){
                             <CacheRoute path='/episodes'>
                                 <EpisodesPage />
                             </CacheRoute>
-                            
+                            <CacheRoute path='/heatmap'>
+                                <HeatMapPage />
+                            </CacheRoute>
                             <Redirect to='/characters' />
                         </CacheSwitch>
                     </ContentBody>
                 </Content>
             </MemoryRouter>
         </div>
-    )
+    );
 }
 
 export default Layout;
