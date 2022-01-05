@@ -1,34 +1,33 @@
-import React, {useState, useCallback} from "react";
+import React, { useState, useCallback } from "react";
 
 // Components
 import Tooltip from "./Tooltip";
 
 // Utils
-import {getColor} from "./utils/getColor";
+import { getColor } from "./utils/getColor";
 
-const HeatMapGraph = ({characters, maxCharacters, maxEpisodes}) => {
+const HeatMapGraph = ({ characters, maxCharacters, maxEpisodes }) => {
     const [tooltipState, setTooltipState] = useState({
-        coordinates: {x: 0, y: 0},
+        coordinates: { x: 0, y: 0 },
         visible: false,
-        info: {name: "", episode: "", season: ""},
+        info: { name: "", episode: "", season: "" },
         amount: 0,
     });
 
     const handleHover = useCallback((e, name, episode, season, amount) => {
-        console.log({amount});
         setTooltipState({
-            coordinates: {x: e.pageX, y: e.pageY},
+            coordinates: { x: e.pageX, y: e.pageY },
             visible: true,
-            info: {name, episode, season},
+            info: { name, episode, season },
             amount,
         });
     }, []);
 
     const handleLeaveHover = useCallback(() => {
         setTooltipState({
-            coordinates: {x: 0, y: 0},
+            coordinates: { x: 0, y: 0 },
             visible: false,
-            info: {name: "", episode: "", season: ""},
+            info: { name: "", episode: "", season: "" },
             amount: 0,
         });
     }, []);
@@ -44,8 +43,8 @@ const HeatMapGraph = ({characters, maxCharacters, maxEpisodes}) => {
             />
 
             <h3>Gráfico de Calor (cantidad de personajes) </h3>
-            <div style={{display: "flex"}}>
-                <div style={{width: "40px", paddingTop: "200px"}}>
+            <div style={{ display: "flex" }}>
+                <div style={{ width: "40px", paddingTop: "200px" }}>
                     <h4
                         style={{
                             transform: "rotate(-90deg)",
@@ -55,11 +54,11 @@ const HeatMapGraph = ({characters, maxCharacters, maxEpisodes}) => {
                     </h4>
                 </div>
                 <div>
-                    <h4 style={{textAlign: "center", margin: "0"}}>
+                    <h4 style={{ textAlign: "center", margin: "0" }}>
                         Episodios
                     </h4>
                     <div>
-                        <div style={{display: "flex"}}>
+                        <div style={{ display: "flex" }}>
                             <span
                                 style={{
                                     textAlign: "center",
@@ -85,7 +84,7 @@ const HeatMapGraph = ({characters, maxCharacters, maxEpisodes}) => {
                         </div>
                     </div>
                     {characters.map((season, index) => (
-                        <div key={season.id} style={{display: "flex"}}>
+                        <div key={season.id} style={{ display: "flex" }}>
                             <p
                                 style={{
                                     margin: "0",
@@ -100,6 +99,7 @@ const HeatMapGraph = ({characters, maxCharacters, maxEpisodes}) => {
                             {season.episodes.map((episode) => (
                                 <p
                                     key={`${season.id}-${episode.id}`}
+                                    id={`${season.id}-${episode.id}`}
                                     onMouseOver={(e) => {
                                         handleHover(
                                             e,
@@ -124,11 +124,13 @@ const HeatMapGraph = ({characters, maxCharacters, maxEpisodes}) => {
                         </div>
                     ))}
                 </div>
-                <div style={{marginLeft: "30px"}}>
-                    <h4 style={{textAlign: "center", margin: "0"}}>Índice</h4>
-                    <div style={{display: "flex"}}>
-                        <div style={{display: "flex", flexDirection: "column"}}>
-                            <p style={{textAlign: "center"}}>0</p>
+                <div style={{ marginLeft: "30px" }}>
+                    <h4 style={{ textAlign: "center", margin: "0" }}>Índice</h4>
+                    <div style={{ display: "flex" }}>
+                        <div
+                            style={{ display: "flex", flexDirection: "column" }}
+                        >
+                            <p style={{ textAlign: "center" }}>0</p>
                             <p
                                 style={{
                                     backgroundColor: getColor(0, maxCharacters),
@@ -138,8 +140,10 @@ const HeatMapGraph = ({characters, maxCharacters, maxEpisodes}) => {
                                 }}
                             ></p>
                         </div>
-                        <div style={{display: "flex", flexDirection: "column"}}>
-                            <p style={{textAlign: "center"}}>
+                        <div
+                            style={{ display: "flex", flexDirection: "column" }}
+                        >
+                            <p style={{ textAlign: "center" }}>
                                 {Math.floor(maxCharacters / 2)}
                             </p>
                             <p
@@ -154,8 +158,12 @@ const HeatMapGraph = ({characters, maxCharacters, maxEpisodes}) => {
                                 }}
                             ></p>
                         </div>
-                        <div style={{display: "flex", flexDirection: "column"}}>
-                            <p style={{textAlign: "center"}}>{maxCharacters}</p>
+                        <div
+                            style={{ display: "flex", flexDirection: "column" }}
+                        >
+                            <p style={{ textAlign: "center" }}>
+                                {maxCharacters}
+                            </p>
                             <p
                                 style={{
                                     backgroundColor: getColor(
